@@ -18,8 +18,6 @@ class CommonView: UIView, NibOwnerLoadable {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-
-        
     }
 
 }

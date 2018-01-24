@@ -14,5 +14,5 @@ class CardView: CommonView  {
 
 }
 
-extension CardView: PushAndPopable {}
+//extension CardView: PushAndPopable {}
 

@@ -24,6 +24,6 @@ extension NavigationController: UINavigationControllerDelegate {
         from fromVC: UIViewController,
         to toVC: UIViewController
     ) -> UIViewControllerAnimatedTransitioning? {
-        return PopInAndOutAnimator(operation: operation)
+        return PopInAndOutAnimator(operation: operation, andDuration: 0.4)
     }
 }

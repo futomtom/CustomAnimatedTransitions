@@ -13,7 +13,12 @@
 		1580DA0D1F8E6D53001F95CD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1580DA0C1F8E6D53001F95CD /* Assets.xcassets */; };
 		1580DA101F8E6D53001F95CD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1580DA0E1F8E6D53001F95CD /* LaunchScreen.storyboard */; };
 		15940AB21FA118E5006F29C2 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15940AB11FA118E5006F29C2 /* CardView.swift */; };
-		15BC18291F8E749400FA6AF4 /* PushPopTransitionAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15BC18281F8E749400FA6AF4 /* PushPopTransitionAnimator.swift */; };
+		15B61A1B2018CED700CF894F /* Cell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 15B61A1A2018CED700CF894F /* Cell.xib */; };
+		15B61A1D2018CF1000CF894F /* Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B61A1C2018CF1000CF894F /* Cell.swift */; };
+		15B61A1F2018D3CC00CF894F /* UICollectionView+Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B61A1E2018D3CC00CF894F /* UICollectionView+Reusable.swift */; };
+		15B61A212018D3E700CF894F /* Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B61A202018D3E700CF894F /* Reusable.swift */; };
+		15B61A232018D40200CF894F /* NibLoadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B61A222018D40200CF894F /* NibLoadable.swift */; };
+		15BC18291F8E749400FA6AF4 /* TransitionAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15BC18281F8E749400FA6AF4 /* TransitionAnimator.swift */; };
 		15BC182B1F8E74E600FA6AF4 /* CommonView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 15BC182A1F8E74E600FA6AF4 /* CommonView.xib */; };
 		15BC182D1F8E784C00FA6AF4 /* ExpandedViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 15BC182C1F8E784C00FA6AF4 /* ExpandedViewController.storyboard */; };
 		15BC18301F8E799700FA6AF4 /* NibOwnerLoadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15BC182F1F8E799700FA6AF4 /* NibOwnerLoadable.swift */; };
@@ -32,7 +37,12 @@
 		1580DA0F1F8E6D53001F95CD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1580DA111F8E6D53001F95CD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		15940AB11FA118E5006F29C2 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
-		15BC18281F8E749400FA6AF4 /* PushPopTransitionAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushPopTransitionAnimator.swift; sourceTree = "<group>"; };
+		15B61A1A2018CED700CF894F /* Cell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Cell.xib; sourceTree = "<group>"; };
+		15B61A1C2018CF1000CF894F /* Cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cell.swift; sourceTree = "<group>"; };
+		15B61A1E2018D3CC00CF894F /* UICollectionView+Reusable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Reusable.swift"; sourceTree = "<group>"; };
+		15B61A202018D3E700CF894F /* Reusable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reusable.swift; sourceTree = "<group>"; };
+		15B61A222018D40200CF894F /* NibLoadable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NibLoadable.swift; sourceTree = "<group>"; };
+		15BC18281F8E749400FA6AF4 /* TransitionAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransitionAnimator.swift; sourceTree = "<group>"; };
 		15BC182A1F8E74E600FA6AF4 /* CommonView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CommonView.xib; sourceTree = "<group>"; };
 		15BC182C1F8E784C00FA6AF4 /* ExpandedViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ExpandedViewController.storyboard; sourceTree = "<group>"; };
 		15BC182F1F8E799700FA6AF4 /* NibOwnerLoadable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NibOwnerLoadable.swift; sourceTree = "<group>"; };
@@ -72,7 +82,8 @@
 		1580DA041F8E6D53001F95CD /* ExpandingCollasingViews */ = {
 			isa = PBXGroup;
 			children = (
-				15BC182E1F8E798400FA6AF4 /* Utils */,
+				15B61A252018D95300CF894F /* Reusables */,
+				15B61A242018D94B00CF894F /* Animators */,
 				1580DA051F8E6D53001F95CD /* AppDelegate.swift */,
 				1580DA071F8E6D53001F95CD /* ViewController.swift */,
 				1580DA091F8E6D53001F95CD /* Main.storyboard */,
@@ -85,18 +96,30 @@
 				15BC18331F8E80BE00FA6AF4 /* ExpandedViewController.swift */,
 				15BC18371F8E8CFD00FA6AF4 /* NavigationController.swift */,
 				15940AB11FA118E5006F29C2 /* CardView.swift */,
+				15B61A1A2018CED700CF894F /* Cell.xib */,
+				15B61A1C2018CF1000CF894F /* Cell.swift */,
 			);
 			path = ExpandingCollasingViews;
 			sourceTree = "<group>";
 		};
-		15BC182E1F8E798400FA6AF4 /* Utils */ = {
+		15B61A242018D94B00CF894F /* Animators */ = {
 			isa = PBXGroup;
 			children = (
-				15BC18281F8E749400FA6AF4 /* PushPopTransitionAnimator.swift */,
+				15BC18281F8E749400FA6AF4 /* TransitionAnimator.swift */,
+			);
+			path = Animators;
+			sourceTree = "<group>";
+		};
+		15B61A252018D95300CF894F /* Reusables */ = {
+			isa = PBXGroup;
+			children = (
 				15BC182F1F8E799700FA6AF4 /* NibOwnerLoadable.swift */,
+				15B61A1E2018D3CC00CF894F /* UICollectionView+Reusable.swift */,
+				15B61A202018D3E700CF894F /* Reusable.swift */,
+				15B61A222018D40200CF894F /* NibLoadable.swift */,
 				15BC18351F8E80E200FA6AF4 /* StoryboardBased.swift */,
 			);
-			path = Utils;
+			path = Reusables;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -159,6 +182,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				15BC182D1F8E784C00FA6AF4 /* ExpandedViewController.storyboard in Resources */,
+				15B61A1B2018CED700CF894F /* Cell.xib in Resources */,
 				1580DA101F8E6D53001F95CD /* LaunchScreen.storyboard in Resources */,
 				1580DA0D1F8E6D53001F95CD /* Assets.xcassets in Resources */,
 				15BC182B1F8E74E600FA6AF4 /* CommonView.xib in Resources */,
@@ -179,8 +203,12 @@
 				15BC18301F8E799700FA6AF4 /* NibOwnerLoadable.swift in Sources */,
 				15BC18321F8E7A4200FA6AF4 /* CommonView.swift in Sources */,
 				15BC18341F8E80BE00FA6AF4 /* ExpandedViewController.swift in Sources */,
+				15B61A212018D3E700CF894F /* Reusable.swift in Sources */,
 				1580DA061F8E6D53001F95CD /* AppDelegate.swift in Sources */,
-				15BC18291F8E749400FA6AF4 /* PushPopTransitionAnimator.swift in Sources */,
+				15BC18291F8E749400FA6AF4 /* TransitionAnimator.swift in Sources */,
+				15B61A232018D40200CF894F /* NibLoadable.swift in Sources */,
+				15B61A1D2018CF1000CF894F /* Cell.swift in Sources */,
+				15B61A1F2018D3CC00CF894F /* UICollectionView+Reusable.swift in Sources */,
 				15BC18361F8E80E200FA6AF4 /* StoryboardBased.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
