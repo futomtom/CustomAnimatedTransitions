@@ -8,11 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		1580DA061F8E6D53001F95CD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1580DA051F8E6D53001F95CD /* AppDelegate.swift */; };
-		1580DA081F8E6D53001F95CD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1580DA071F8E6D53001F95CD /* ViewController.swift */; };
+		1580DA081F8E6D53001F95CD /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1580DA071F8E6D53001F95CD /* CollectionViewController.swift */; };
 		1580DA0B1F8E6D53001F95CD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1580DA091F8E6D53001F95CD /* Main.storyboard */; };
 		1580DA0D1F8E6D53001F95CD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1580DA0C1F8E6D53001F95CD /* Assets.xcassets */; };
 		1580DA101F8E6D53001F95CD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1580DA0E1F8E6D53001F95CD /* LaunchScreen.storyboard */; };
-		15940AB21FA118E5006F29C2 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15940AB11FA118E5006F29C2 /* CardView.swift */; };
 		15B61A1B2018CED700CF894F /* Cell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 15B61A1A2018CED700CF894F /* Cell.xib */; };
 		15B61A1D2018CF1000CF894F /* Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B61A1C2018CF1000CF894F /* Cell.swift */; };
 		15B61A1F2018D3CC00CF894F /* UICollectionView+Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B61A1E2018D3CC00CF894F /* UICollectionView+Reusable.swift */; };
@@ -20,10 +19,10 @@
 		15B61A232018D40200CF894F /* NibLoadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B61A222018D40200CF894F /* NibLoadable.swift */; };
 		15BC18291F8E749400FA6AF4 /* TransitionAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15BC18281F8E749400FA6AF4 /* TransitionAnimator.swift */; };
 		15BC182B1F8E74E600FA6AF4 /* CommonView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 15BC182A1F8E74E600FA6AF4 /* CommonView.xib */; };
-		15BC182D1F8E784C00FA6AF4 /* ExpandedViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 15BC182C1F8E784C00FA6AF4 /* ExpandedViewController.storyboard */; };
+		15BC182D1F8E784C00FA6AF4 /* DetailViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 15BC182C1F8E784C00FA6AF4 /* DetailViewController.storyboard */; };
 		15BC18301F8E799700FA6AF4 /* NibOwnerLoadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15BC182F1F8E799700FA6AF4 /* NibOwnerLoadable.swift */; };
 		15BC18321F8E7A4200FA6AF4 /* CommonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15BC18311F8E7A4200FA6AF4 /* CommonView.swift */; };
-		15BC18341F8E80BE00FA6AF4 /* ExpandedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15BC18331F8E80BE00FA6AF4 /* ExpandedViewController.swift */; };
+		15BC18341F8E80BE00FA6AF4 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15BC18331F8E80BE00FA6AF4 /* DetailViewController.swift */; };
 		15BC18361F8E80E200FA6AF4 /* StoryboardBased.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15BC18351F8E80E200FA6AF4 /* StoryboardBased.swift */; };
 		15BC18381F8E8CFD00FA6AF4 /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15BC18371F8E8CFD00FA6AF4 /* NavigationController.swift */; };
 /* End PBXBuildFile section */
@@ -31,12 +30,11 @@
 /* Begin PBXFileReference section */
 		1580DA021F8E6D53001F95CD /* ExpandingCollasingViews.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExpandingCollasingViews.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1580DA051F8E6D53001F95CD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		1580DA071F8E6D53001F95CD /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		1580DA071F8E6D53001F95CD /* CollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
 		1580DA0A1F8E6D53001F95CD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		1580DA0C1F8E6D53001F95CD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1580DA0F1F8E6D53001F95CD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1580DA111F8E6D53001F95CD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		15940AB11FA118E5006F29C2 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		15B61A1A2018CED700CF894F /* Cell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Cell.xib; sourceTree = "<group>"; };
 		15B61A1C2018CF1000CF894F /* Cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cell.swift; sourceTree = "<group>"; };
 		15B61A1E2018D3CC00CF894F /* UICollectionView+Reusable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Reusable.swift"; sourceTree = "<group>"; };
@@ -44,10 +42,10 @@
 		15B61A222018D40200CF894F /* NibLoadable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NibLoadable.swift; sourceTree = "<group>"; };
 		15BC18281F8E749400FA6AF4 /* TransitionAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransitionAnimator.swift; sourceTree = "<group>"; };
 		15BC182A1F8E74E600FA6AF4 /* CommonView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CommonView.xib; sourceTree = "<group>"; };
-		15BC182C1F8E784C00FA6AF4 /* ExpandedViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ExpandedViewController.storyboard; sourceTree = "<group>"; };
+		15BC182C1F8E784C00FA6AF4 /* DetailViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DetailViewController.storyboard; sourceTree = "<group>"; };
 		15BC182F1F8E799700FA6AF4 /* NibOwnerLoadable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NibOwnerLoadable.swift; sourceTree = "<group>"; };
 		15BC18311F8E7A4200FA6AF4 /* CommonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonView.swift; sourceTree = "<group>"; };
-		15BC18331F8E80BE00FA6AF4 /* ExpandedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandedViewController.swift; sourceTree = "<group>"; };
+		15BC18331F8E80BE00FA6AF4 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		15BC18351F8E80E200FA6AF4 /* StoryboardBased.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryboardBased.swift; sourceTree = "<group>"; };
 		15BC18371F8E8CFD00FA6AF4 /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -63,6 +61,44 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1514AD30202254EF00604583 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				1514AD31202254F300604583 /* CollectionView */,
+				1514AD332022555400604583 /* DetailView */,
+				1514AD322022552D00604583 /* CommonView */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		1514AD31202254F300604583 /* CollectionView */ = {
+			isa = PBXGroup;
+			children = (
+				1580DA071F8E6D53001F95CD /* CollectionViewController.swift */,
+				15B61A1A2018CED700CF894F /* Cell.xib */,
+				15B61A1C2018CF1000CF894F /* Cell.swift */,
+			);
+			path = CollectionView;
+			sourceTree = "<group>";
+		};
+		1514AD322022552D00604583 /* CommonView */ = {
+			isa = PBXGroup;
+			children = (
+				15BC18311F8E7A4200FA6AF4 /* CommonView.swift */,
+				15BC182A1F8E74E600FA6AF4 /* CommonView.xib */,
+			);
+			path = CommonView;
+			sourceTree = "<group>";
+		};
+		1514AD332022555400604583 /* DetailView */ = {
+			isa = PBXGroup;
+			children = (
+				15BC182C1F8E784C00FA6AF4 /* DetailViewController.storyboard */,
+				15BC18331F8E80BE00FA6AF4 /* DetailViewController.swift */,
+			);
+			path = DetailView;
+			sourceTree = "<group>";
+		};
 		1580D9F91F8E6D53001F95CD = {
 			isa = PBXGroup;
 			children = (
@@ -82,22 +118,15 @@
 		1580DA041F8E6D53001F95CD /* ExpandingCollasingViews */ = {
 			isa = PBXGroup;
 			children = (
+				1514AD30202254EF00604583 /* UI */,
 				15B61A252018D95300CF894F /* Reusables */,
 				15B61A242018D94B00CF894F /* Animators */,
-				1580DA051F8E6D53001F95CD /* AppDelegate.swift */,
-				1580DA071F8E6D53001F95CD /* ViewController.swift */,
-				1580DA091F8E6D53001F95CD /* Main.storyboard */,
-				1580DA0C1F8E6D53001F95CD /* Assets.xcassets */,
 				1580DA0E1F8E6D53001F95CD /* LaunchScreen.storyboard */,
-				1580DA111F8E6D53001F95CD /* Info.plist */,
-				15BC18311F8E7A4200FA6AF4 /* CommonView.swift */,
-				15BC182A1F8E74E600FA6AF4 /* CommonView.xib */,
-				15BC182C1F8E784C00FA6AF4 /* ExpandedViewController.storyboard */,
-				15BC18331F8E80BE00FA6AF4 /* ExpandedViewController.swift */,
+				1580DA091F8E6D53001F95CD /* Main.storyboard */,
+				1580DA051F8E6D53001F95CD /* AppDelegate.swift */,
 				15BC18371F8E8CFD00FA6AF4 /* NavigationController.swift */,
-				15940AB11FA118E5006F29C2 /* CardView.swift */,
-				15B61A1A2018CED700CF894F /* Cell.xib */,
-				15B61A1C2018CF1000CF894F /* Cell.swift */,
+				1580DA0C1F8E6D53001F95CD /* Assets.xcassets */,
+				1580DA111F8E6D53001F95CD /* Info.plist */,
 			);
 			path = ExpandingCollasingViews;
 			sourceTree = "<group>";
@@ -181,7 +210,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				15BC182D1F8E784C00FA6AF4 /* ExpandedViewController.storyboard in Resources */,
+				15BC182D1F8E784C00FA6AF4 /* DetailViewController.storyboard in Resources */,
 				15B61A1B2018CED700CF894F /* Cell.xib in Resources */,
 				1580DA101F8E6D53001F95CD /* LaunchScreen.storyboard in Resources */,
 				1580DA0D1F8E6D53001F95CD /* Assets.xcassets in Resources */,
@@ -197,12 +226,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1580DA081F8E6D53001F95CD /* ViewController.swift in Sources */,
-				15940AB21FA118E5006F29C2 /* CardView.swift in Sources */,
+				1580DA081F8E6D53001F95CD /* CollectionViewController.swift in Sources */,
 				15BC18381F8E8CFD00FA6AF4 /* NavigationController.swift in Sources */,
 				15BC18301F8E799700FA6AF4 /* NibOwnerLoadable.swift in Sources */,
 				15BC18321F8E7A4200FA6AF4 /* CommonView.swift in Sources */,
-				15BC18341F8E80BE00FA6AF4 /* ExpandedViewController.swift in Sources */,
+				15BC18341F8E80BE00FA6AF4 /* DetailViewController.swift in Sources */,
 				15B61A212018D3E700CF894F /* Reusable.swift in Sources */,
 				1580DA061F8E6D53001F95CD /* AppDelegate.swift in Sources */,
 				15BC18291F8E749400FA6AF4 /* TransitionAnimator.swift in Sources */,

@@ -19,10 +19,3 @@ class Cell: UICollectionViewCell, NibReusable {
         self.commonView.layer.masksToBounds = true
     }
 }
-
-//extension Cell: PushAndPopable {
-//    var animatableView: UIView? {
-//        return self
-//    }
-//}
-

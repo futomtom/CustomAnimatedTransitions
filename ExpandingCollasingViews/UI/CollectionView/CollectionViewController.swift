@@ -1,16 +1,6 @@
-//
-//  ViewController.swift
-//  ExpandingCollasingViews
-//
-//  Created by John DeLong on 10/11/17.
-//  Copyright © 2017 MichiganLabs. All rights reserved.
-//
-
-//PresentSectionViewController
-
 import UIKit
 
-class ViewController: UIViewController {
+class CollectionViewController: UIViewController {
 
     @IBOutlet weak var collectionView: UICollectionView!
 
@@ -32,7 +22,7 @@ class ViewController: UIViewController {
     }
 }
 
-extension ViewController: UICollectionViewDataSource {
+extension CollectionViewController: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
@@ -48,15 +38,15 @@ extension ViewController: UICollectionViewDataSource {
     }
 }
 
-extension ViewController: UICollectionViewDelegate {
+extension CollectionViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         self.selectedCell = self.collectionView.cellForItem(at: indexPath)
-        let vc = ExpandedViewController.instantiate()
+        let vc = DetailViewController.instantiate()
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }
 
-extension ViewController: Animatable {
+extension CollectionViewController: Animatable {
     var containerView: UIView? {
         return self.collectionView
     }

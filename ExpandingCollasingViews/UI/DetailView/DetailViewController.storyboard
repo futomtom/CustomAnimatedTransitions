@@ -9,10 +9,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Expanded View Controller-->
+        <!--Detail View Controller-->
         <scene sceneID="Lf4-ja-wbf">
             <objects>
-                <viewController id="9PU-bB-qR6" customClass="ExpandedViewController" customModule="ExpandingCollasingViews" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="9PU-bB-qR6" customClass="DetailViewController" customModule="ExpandingCollasingViews" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="paI-3w-oKc">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -39,7 +39,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" red="0.77647058820000003" green="0.15686274510000001" blue="0.15686274510000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="50s-LU-bEa" secondAttribute="trailing" constant="8" id="FI4-5X-TlW"/>
                                     <constraint firstAttribute="trailing" secondItem="mkI-x0-qHn" secondAttribute="trailing" constant="16" id="V7d-wX-y2X"/>
@@ -63,8 +63,8 @@
                     </view>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
+                        <outlet property="bodyView" destination="ucz-Kl-mbU" id="9Lm-88-iXm"/>
                         <outlet property="commonView" destination="pao-gC-hAQ" id="oNH-Pc-E01"/>
-                        <outlet property="detailView" destination="ucz-Kl-mbU" id="9Lm-88-iXm"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kp2-b2-SxF" userLabel="First Responder" sceneMemberID="firstResponder"/>
