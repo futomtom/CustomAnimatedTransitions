@@ -8,14 +8,31 @@ class Cell: UICollectionViewCell, NibReusable {
     override func awakeFromNib() {
         super.awakeFromNib()
 
-        // Add a shadow
-        self.shadowView.layer.shadowRadius = 16
-        self.shadowView.layer.shadowOffset = CGSize(width: 0, height: 4)
-        self.shadowView.layer.shadowOpacity = 0.25
         self.shadowView.layer.masksToBounds = false
-
-        // Round the corners
-        self.commonView.layer.cornerRadius = 20
         self.commonView.layer.masksToBounds = true
+
+        self.styleAsCard(isCard: true)
+    }
+
+    func styleAsCard(isCard: Bool) {
+
+
+        if isCard {
+            // Add a shadow
+            self.shadowView.layer.shadowRadius = 16
+            self.shadowView.layer.shadowOffset = CGSize(width: 0, height: 4)
+            self.shadowView.layer.shadowOpacity = 0.25
+
+            // Round the corners
+            self.commonView.layer.cornerRadius = 20
+        } else {
+            // Add a shadow
+            self.shadowView.layer.shadowRadius = 0
+            self.shadowView.layer.shadowOffset = .zero
+            self.shadowView.layer.shadowOpacity = 0
+
+            // Round the corners
+            self.commonView.layer.cornerRadius = 0
+        }
     }
 }

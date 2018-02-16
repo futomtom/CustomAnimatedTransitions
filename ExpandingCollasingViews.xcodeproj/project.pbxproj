@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1514AD3520225B8600604583 /* Animatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1514AD3420225B8600604583 /* Animatable.swift */; };
 		1580DA061F8E6D53001F95CD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1580DA051F8E6D53001F95CD /* AppDelegate.swift */; };
 		1580DA081F8E6D53001F95CD /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1580DA071F8E6D53001F95CD /* CollectionViewController.swift */; };
 		1580DA0B1F8E6D53001F95CD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1580DA091F8E6D53001F95CD /* Main.storyboard */; };
@@ -28,6 +29,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1514AD3420225B8600604583 /* Animatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animatable.swift; sourceTree = "<group>"; };
 		1580DA021F8E6D53001F95CD /* ExpandingCollasingViews.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExpandingCollasingViews.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1580DA051F8E6D53001F95CD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1580DA071F8E6D53001F95CD /* CollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
@@ -135,6 +137,7 @@
 			isa = PBXGroup;
 			children = (
 				15BC18281F8E749400FA6AF4 /* TransitionAnimator.swift */,
+				1514AD3420225B8600604583 /* Animatable.swift */,
 			);
 			path = Animators;
 			sourceTree = "<group>";
@@ -236,6 +239,7 @@
 				15BC18291F8E749400FA6AF4 /* TransitionAnimator.swift in Sources */,
 				15B61A232018D40200CF894F /* NibLoadable.swift in Sources */,
 				15B61A1D2018CF1000CF894F /* Cell.swift in Sources */,
+				1514AD3520225B8600604583 /* Animatable.swift in Sources */,
 				15B61A1F2018D3CC00CF894F /* UICollectionView+Reusable.swift in Sources */,
 				15BC18361F8E80E200FA6AF4 /* StoryboardBased.swift in Sources */,
 			);

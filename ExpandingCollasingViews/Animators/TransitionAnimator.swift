@@ -1,27 +1,20 @@
 import UIKit
 
-protocol Animatable {
-    var containerView: UIView? { get }
-    var childView: UIView? { get }
-
-    // willDismiss
-    func willDismiss(withDuration: TimeInterval)
-    func willPresent(withDuration: TimeInterval)
-}
-
-extension Animatable {
-    func willDismiss(withDuration: TimeInterval) {}
-    func willPresent(withDuration: TimeInterval) {}
-}
-
 class PopInAndOutAnimator: NSObject, UIViewControllerAnimatedTransitioning {
+
+    enum AnimationType {
+        case spring(dampingRatio: CGFloat, velocity: CGFloat, options: UIViewAnimationOptions)
+        case linear(options: UIViewAnimationOptions)
+    }
 
     fileprivate let operationType: UINavigationControllerOperation
     fileprivate let transitionDuration: TimeInterval
+    fileprivate let animationType: AnimationType
 
-    init(operation: UINavigationControllerOperation, andDuration duration: TimeInterval) {
+    init(operation: UINavigationControllerOperation, andDuration duration: TimeInterval, animationType: AnimationType) {
         self.operationType = operation
         self.transitionDuration = duration
+        self.animationType = animationType
     }
 
     // MARK: UIViewControllerAnimatedTransitioning
@@ -72,20 +65,20 @@ class PopInAndOutAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         fromChild.frame.origin = containerCoord
 
         // Let the views know we are about to animate
-        toVC.willPresent(withDuration: self.transitionDuration)
-        fromVC.willDismiss(withDuration: self.transitionDuration)
+        toVC.presentingView(fromChild, withDuration: self.transitionDuration)
+        fromVC.dismissingView(fromChild, withDuration: self.transitionDuration)
 
-        UIView.animate(withDuration: self.transitionDuration, animations: {
+        self.animate({
             // Resize cell to
             fromChild.frame = toChild.frame
             fromChild.layoutIfNeeded()
-        }) { _ in
+        }, completion: { _ in
             // Restore original info
             fromChild.frame = originalFrame
             fromSuperview?.addSubview(fromChild)
 
             transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
-        }
+        })
     }
 
     internal func dismissTransition(_ transitionContext: UIViewControllerContextTransitioning) {
@@ -121,18 +114,41 @@ class PopInAndOutAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         toChild.frame = fromChild.frame
 
         // Let the views know we are about to animate
-        toVC.willPresent(withDuration: self.transitionDuration)
-        fromVC.willDismiss(withDuration: self.transitionDuration)
+        toVC.presentingView(toChild, withDuration: self.transitionDuration)
+        fromVC.dismissingView(toChild, withDuration: self.transitionDuration)
 
-        UIView.animate(withDuration: self.transitionDuration, animations: {
+        self.animate({
             toChild.frame = originalFrame
             toChild.frame.origin = containerCoord
             toChild.layoutIfNeeded()
-        }) { _ in
+        }, completion: { _ in
             toChild.frame = originalFrame
             toSuperview?.addSubview(toChild)
 
             transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
+        })
+    }
+
+    private func animate(_ animations: @escaping (() -> Void), completion: @escaping ((Bool) -> Void)) {
+        switch self.animationType {
+        case .linear(let options):
+            UIView.animate(
+                withDuration: self.transitionDuration,
+                delay: 0,
+                options: options,
+                animations: animations,
+                completion: completion
+            )
+        case .spring(let ratio, let velocity, let options):
+            UIView.animate(
+                withDuration: self.transitionDuration,
+                delay: 0,
+                usingSpringWithDamping: ratio,
+                initialSpringVelocity: velocity,
+                options: options,
+                animations: animations,
+                completion: completion
+            )
         }
     }
 }

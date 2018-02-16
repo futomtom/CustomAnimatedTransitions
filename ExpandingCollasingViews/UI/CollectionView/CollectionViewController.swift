@@ -1,9 +1,7 @@
 import UIKit
 
 class CollectionViewController: UIViewController {
-
     @IBOutlet weak var collectionView: UICollectionView!
-
     fileprivate var selectedCell: UICollectionViewCell?
 
     override func viewDidLoad() {
@@ -13,9 +11,10 @@ class CollectionViewController: UIViewController {
         self.collectionView.delegate = self
 
         let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: 300, height: 300)
-        layout.scrollDirection = .horizontal
+        layout.itemSize = CGSize(width: 300, height: 400)
+        layout.scrollDirection = .vertical
         layout.minimumLineSpacing = 16
+        layout.sectionInset = UIEdgeInsetsMake(0, 16, 0, 16)
         self.collectionView.collectionViewLayout = layout
 
         self.collectionView.register(cellType: Cell.self)
@@ -33,7 +32,6 @@ extension CollectionViewController: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(for: indexPath, cellType: Cell.self)
-
         return cell
     }
 }
