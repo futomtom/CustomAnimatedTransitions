@@ -6,9 +6,11 @@ protocol Animatable {
 
     func dismissingView(_ view: UIView, withDuration duration: TimeInterval)
     func presentingView(_ view: UIView, withDuration duration: TimeInterval)
+    func transitionDidComplete(_ finish: Bool)
 }
 
 extension Animatable {
     func dismissingView(_ view: UIView, withDuration duration: TimeInterval) {}
     func presentingView(_ view: UIView, withDuration duration: TimeInterval) {}
+    func transitionDidComplete(_ finish: Bool) {}
 }

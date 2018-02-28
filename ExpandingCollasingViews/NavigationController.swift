@@ -18,8 +18,8 @@ extension NavigationController: UINavigationControllerDelegate {
     ) -> UIViewControllerAnimatedTransitioning? {
         return PopInAndOutAnimator(
             operation: operation,
-            andDuration: 5,
-            animationType: .spring(dampingRatio: 0.6, velocity: 8, options: .curveEaseInOut)
+            andDuration: 1,
+            animationType: .spring(dampingRatio: 0.6, velocity: 8, options: .curveLinear)
         )
     }
 }

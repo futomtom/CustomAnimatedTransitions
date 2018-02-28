@@ -1,5 +1,7 @@
 import UIKit
 
+// https://www.shinobicontrols.com/blog/ios-10-day-by-day-day-4-uiviewpropertyanimator
+
 class PopInAndOutAnimator: NSObject, UIViewControllerAnimatedTransitioning {
 
     enum AnimationType {
@@ -53,8 +55,11 @@ class PopInAndOutAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         }
 
         // We will restore these later
-        let fromSuperview = fromChild.superview
-        let originalFrame = fromChild.frame
+//        let fromSuperview = fromChild.superview
+//        let originalFrame = fromChild.frame
+
+        let toViewSuperView = toView.superview
+        let fromChildSuperView = fromChild.superview
 
         // Add to container the destination view
         container.addSubview(toView)
@@ -62,7 +67,16 @@ class PopInAndOutAnimator: NSObject, UIViewControllerAnimatedTransitioning {
 
         // Get the coordinates of the view inside the container
         let containerCoord = fromContainer.convert(fromChild.frame.origin, to: container)
-        fromChild.frame.origin = containerCoord
+//        fromChild.frame.origin = containerCoord
+
+
+        let oldFrame = toView.frame
+        toView.frame = fromChild.frame
+        toView.frame.origin = containerCoord
+
+        toView.layoutIfNeeded()
+
+        fromChild.isHidden = true
 
         // Let the views know we are about to animate
         toVC.presentingView(fromChild, withDuration: self.transitionDuration)
@@ -70,12 +84,19 @@ class PopInAndOutAnimator: NSObject, UIViewControllerAnimatedTransitioning {
 
         self.animate({
             // Resize cell to
-            fromChild.frame = toChild.frame
-            fromChild.layoutIfNeeded()
+//            fromChild.frame = toChild.frame
+//            fromChild.layoutIfNeeded()
+
+            toView.frame = oldFrame
+            toView.layoutIfNeeded()
         }, completion: { _ in
             // Restore original info
-            fromChild.frame = originalFrame
-            fromSuperview?.addSubview(fromChild)
+//            fromChild.frame = originalFrame
+//            fromSuperview?.addSubview(fromChild)
+            toViewSuperView?.addSubview(toView)
+            fromChildSuperView?.addSubview(fromChild)
+
+            fromChild.isHidden = false
 
             transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
         })
@@ -101,8 +122,8 @@ class PopInAndOutAnimator: NSObject, UIViewControllerAnimatedTransitioning {
             return
         }
 
-        let toSuperview = toChild.superview
-        let originalFrame = toChild.frame
+        let toChildSuperView = toChild.superview
+//        let originalFrame = toChild.frame
 
         // Add destination view to the container view
         container.addSubview(toView)
@@ -111,22 +132,86 @@ class PopInAndOutAnimator: NSObject, UIViewControllerAnimatedTransitioning {
 
         // Get the coordinates of the view inside the container
         let containerCoord = toContainer.convert(toChild.frame.origin, to: container)
-        toChild.frame = fromChild.frame
+//        toChild.frame = fromChild.frame
+
+        let fromViewOriginalFrame = fromView.frame
+        let toChildOriginalFrame = toChild.frame
+
+        toChild.frame.origin = containerCoord
+
+//        let toChildOriginalFrame = toChild.frame
+//        toChild.frame = fromChild.frame
+
+//        toChild.isHidden = true
 
         // Let the views know we are about to animate
         toVC.presentingView(toChild, withDuration: self.transitionDuration)
         fromVC.dismissingView(toChild, withDuration: self.transitionDuration)
 
-        self.animate({
-            toChild.frame = originalFrame
-            toChild.frame.origin = containerCoord
-            toChild.layoutIfNeeded()
-        }, completion: { _ in
-            toChild.frame = originalFrame
-            toSuperview?.addSubview(toChild)
+        toChild.isHidden = true
+
+//        (fromVC as! DetailViewController).bottomConstraint.isActive = true
+
+
+
+        let animator = UIViewPropertyAnimator(duration: self.transitionDuration, dampingRatio: 0.6)
+
+
+
+        // Add our first animation block
+        animator.addAnimations {
+
+
+
+        }
+
+        // Now here goes our second
+        animator.addAnimations {
+//            fromView.frame.origin = containerCoord
+            fromView.center = toChild.center
+        }
+
+        // We can also add multiple completion blocks
+        animator.addCompletion {
+            _ in
+            toChild.frame = toChildOriginalFrame
+            toChildSuperView?.addSubview(toChild)
+
+            toChild.isHidden = false
+
+            fromView.frame = fromViewOriginalFrame
+            fromView.layoutIfNeeded()
+
+            toChildSuperView?.addSubview(toChild)
 
             transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
-        })
+        }
+
+        animator.startAnimation()
+
+
+        let animator2 = UIViewPropertyAnimator(duration: self.transitionDuration / 2, curve: .easeInOut)
+        animator2.addAnimations {
+            fromView.frame = toChild.frame
+            fromView.layoutIfNeeded()
+        }
+        animator2.startAnimation()
+
+//        self.animate({
+//
+//        }, completion: { _ in
+//
+//        })
+
+//        UIView.animate(withDuration: self.transitionDuration / 2, animations: {
+//
+//            fromView.layoutIfNeeded()
+//        }, completion: { _ in
+//
+//
+//        })
+
+
     }
 
     private func animate(_ animations: @escaping (() -> Void), completion: @escaping ((Bool) -> Void)) {
