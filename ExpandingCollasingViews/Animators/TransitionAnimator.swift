@@ -122,96 +122,61 @@ class PopInAndOutAnimator: NSObject, UIViewControllerAnimatedTransitioning {
             return
         }
 
-        let toChildSuperView = toChild.superview
-//        let originalFrame = toChild.frame
+        // container view (2 views)
+        //  * starts at full screen
+        //  * resizes to card size
+        // - Card
+        //  * if off screen, starts exactly at the top of the container
+        //  * use center of card to postion
+        // - snapshot of body text
 
-        // Add destination view to the container view
         container.addSubview(toView)
-        container.addSubview(toChild)
         container.addSubview(fromView)
-
-        // Get the coordinates of the view inside the container
-        let containerCoord = toContainer.convert(toChild.frame.origin, to: container)
-//        toChild.frame = fromChild.frame
-
-        let fromViewOriginalFrame = fromView.frame
-        let toChildOriginalFrame = toChild.frame
-
-        toChild.frame.origin = containerCoord
-
-//        let toChildOriginalFrame = toChild.frame
-//        toChild.frame = fromChild.frame
-
-//        toChild.isHidden = true
-
-        // Let the views know we are about to animate
-        toVC.presentingView(toChild, withDuration: self.transitionDuration)
-        fromVC.dismissingView(toChild, withDuration: self.transitionDuration)
 
         toChild.isHidden = true
 
-//        (fromVC as! DetailViewController).bottomConstraint.isActive = true
+        // Get the coordinates of the view inside the container
+        let originFrame = fromView.frame
+        let destinationFrame = CGRect(
+            origin: toContainer.convert(toChild.frame.origin, to: container),
+            size: toChild.frame.size
+        )
 
+        let yDiff = destinationFrame.origin.y - originFrame.origin.y
+        let xDiff = destinationFrame.origin.x - originFrame.origin.x
 
-
-        let animator = UIViewPropertyAnimator(duration: self.transitionDuration, dampingRatio: 0.6)
-
-
-
-        // Add our first animation block
-        animator.addAnimations {
-
-
-
+        // For the duration of the animation, we are moving the frame. Therefore we have a separate animator
+        // to just control the Y positioning of the views. We will also use this animator to determine when
+        // all of our animations are done.
+        let positionAnimator = UIViewPropertyAnimator(duration: self.transitionDuration, dampingRatio: 0.6)
+        positionAnimator.addAnimations {
+            // Move the view in the Y direction
+            fromView.transform = CGAffineTransform(translationX: 0, y: yDiff)
         }
 
-        // Now here goes our second
-        animator.addAnimations {
-//            fromView.frame.origin = containerCoord
-            fromView.center = toChild.center
-        }
-
-        // We can also add multiple completion blocks
-        animator.addCompletion {
-            _ in
-            toChild.frame = toChildOriginalFrame
-            toChildSuperView?.addSubview(toChild)
-
-            toChild.isHidden = false
-
-            fromView.frame = fromViewOriginalFrame
+        let sizeAnimator = UIViewPropertyAnimator(duration: self.transitionDuration / 2, curve: .easeInOut)
+        sizeAnimator.addAnimations {
+            fromView.frame.size = destinationFrame.size
             fromView.layoutIfNeeded()
 
-            toChildSuperView?.addSubview(toChild)
+            // Move the view in the X direction. We concatinate here because we do not want to overwrite our
+            // previous transformation
+            fromView.transform = fromView.transform.concatenating(CGAffineTransform(translationX: xDiff, y: 0))
+        }
+
+        // Animations Have Ended
+        positionAnimator.addCompletion { _ in
+            fromView.removeFromSuperview()
+            toChild.isHidden = false
 
             transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
         }
 
-        animator.startAnimation()
+        fromVC.positioning(with: positionAnimator, fromPoint: originFrame.origin, toPoint: destinationFrame.origin)
+        fromVC.resizing(with: sizeAnimator, fromFrame: fromView.frame, toFrame: destinationFrame)
 
-
-        let animator2 = UIViewPropertyAnimator(duration: self.transitionDuration / 2, curve: .easeInOut)
-        animator2.addAnimations {
-            fromView.frame = toChild.frame
-            fromView.layoutIfNeeded()
-        }
-        animator2.startAnimation()
-
-//        self.animate({
-//
-//        }, completion: { _ in
-//
-//        })
-
-//        UIView.animate(withDuration: self.transitionDuration / 2, animations: {
-//
-//            fromView.layoutIfNeeded()
-//        }, completion: { _ in
-//
-//
-//        })
-
-
+        positionAnimator.startAnimation()
+        sizeAnimator.startAnimation()
     }
 
     private func animate(_ animations: @escaping (() -> Void), completion: @escaping ((Bool) -> Void)) {

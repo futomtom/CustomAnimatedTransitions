@@ -19,7 +19,7 @@ extension NavigationController: UINavigationControllerDelegate {
         return PopInAndOutAnimator(
             operation: operation,
             andDuration: 1,
-            animationType: .spring(dampingRatio: 0.6, velocity: 8, options: .curveLinear)
+            animationType: .spring(dampingRatio: 0.7, velocity: 8, options: .curveEaseOut)
         )
     }
 }

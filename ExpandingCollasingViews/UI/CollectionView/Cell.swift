@@ -2,8 +2,8 @@ import UIKit
 
 class Cell: UICollectionViewCell, NibReusable {
 
-    @IBOutlet weak var shadowView: UIView!
-    @IBOutlet weak var commonView: CommonView!
+    @IBOutlet fileprivate weak var shadowView: UIView!
+    @IBOutlet fileprivate weak var commonView: CommonView!
 
     override func awakeFromNib() {
         super.awakeFromNib()

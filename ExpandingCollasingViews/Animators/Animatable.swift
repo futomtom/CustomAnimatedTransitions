@@ -7,10 +7,16 @@ protocol Animatable {
     func dismissingView(_ view: UIView, withDuration duration: TimeInterval)
     func presentingView(_ view: UIView, withDuration duration: TimeInterval)
     func transitionDidComplete(_ finish: Bool)
+
+    func resizing(with animator: UIViewPropertyAnimator, fromFrame: CGRect, toFrame: CGRect)
+    func positioning(with animator: UIViewPropertyAnimator, fromPoint: CGPoint, toPoint: CGPoint)
 }
 
 extension Animatable {
     func dismissingView(_ view: UIView, withDuration duration: TimeInterval) {}
     func presentingView(_ view: UIView, withDuration duration: TimeInterval) {}
     func transitionDidComplete(_ finish: Bool) {}
+
+    func resizing(with animator: UIViewPropertyAnimator, fromFrame: CGRect, toFrame: CGRect) {}
+    func positioning(with animator: UIViewPropertyAnimator, fromPoint: CGPoint, toPoint: CGPoint) {}
 }
