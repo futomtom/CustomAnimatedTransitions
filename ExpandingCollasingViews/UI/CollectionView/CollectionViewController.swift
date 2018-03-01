@@ -11,7 +11,7 @@ class CollectionViewController: UIViewController {
         self.collectionView.delegate = self
 
         let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: 320, height: 400)
+        layout.itemSize = CGSize(width: 360, height: 400)
         layout.scrollDirection = .vertical
         layout.minimumLineSpacing = 20
         layout.sectionInset = UIEdgeInsetsMake(16, 16, 16, 16)
@@ -19,10 +19,6 @@ class CollectionViewController: UIViewController {
 
         self.collectionView.register(cellType: Cell.self)
     }
-
-//    override var prefersStatusBarHidden: Bool {
-//        return true
-//    }
 }
 
 extension CollectionViewController: UICollectionViewDataSource {

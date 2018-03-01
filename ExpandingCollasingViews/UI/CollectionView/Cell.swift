@@ -18,6 +18,4 @@ class Cell: UICollectionViewCell, NibReusable {
         self.commonView.layer.cornerRadius = 20
         self.commonView.layer.masksToBounds = true
     }
-
-
 }

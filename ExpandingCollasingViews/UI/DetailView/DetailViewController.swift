@@ -6,6 +6,8 @@ class DetailViewController: UIViewController, StoryboardBased {
     @IBOutlet weak var topConstraint: NSLayoutConstraint!
     @IBOutlet weak var heightConstraint: NSLayoutConstraint!
     @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var shadowView: UIView!
+    @IBOutlet weak var maskView: UIView!
 
     override var prefersStatusBarHidden: Bool {
         return true
@@ -13,6 +15,30 @@ class DetailViewController: UIViewController, StoryboardBased {
 
     @IBAction func closePressed(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
+    }
+
+    func asCard(_ value: Bool) {
+        if value {
+            // Add a shadow
+            self.shadowView.layer.shadowRadius = 16
+            self.shadowView.layer.shadowOffset = CGSize(width: 0, height: 4)
+            self.shadowView.layer.shadowOpacity = 0.25
+            self.shadowView.layer.masksToBounds = false
+
+            // Round the corners
+            self.maskView.layer.cornerRadius = 20
+            self.maskView.layer.masksToBounds = true
+        } else {
+            // Add a shadow
+            self.shadowView.layer.shadowRadius = 0
+            self.shadowView.layer.shadowOffset = .zero
+            self.shadowView.layer.shadowOpacity = 0
+            self.shadowView.layer.masksToBounds = false
+
+            // Round the corners
+            self.maskView.layer.cornerRadius = 0
+            self.maskView.layer.masksToBounds = true
+        }
     }
 }
 
@@ -25,17 +51,9 @@ extension DetailViewController: Animatable {
         return self.commonView
     }
 
-    func positioning(with animator: UIViewPropertyAnimator, fromPoint: CGPoint, toPoint: CGPoint) {
+    func positioning(with animator: UIViewPropertyAnimator, fromPoint: CGPoint, toPoint: CGPoint) {        
         animator.addAnimations {
-            // Add a shadow
-            //            self.shadowView.layer.shadowRadius = 16
-            //            self.shadowView.layer.shadowOffset = CGSize(width: 0, height: 4)
-            //            self.shadowView.layer.shadowOpacity = 0.25
-            //            self.shadowView.layer.masksToBounds = false
-
-            // Round the corners
-            self.view.layer.cornerRadius = 20
-            self.view.layer.masksToBounds = true
+            self.asCard(true)
         }
     }
 
@@ -55,6 +73,28 @@ extension DetailViewController: Animatable {
         self.heightConstraint.constant = toFrame.height
         animator.addAnimations {
             self.view.layoutIfNeeded()
+        }
+    }
+
+    func presentingView(
+        sizeAnimator: UIViewPropertyAnimator,
+        positionAnimator: UIViewPropertyAnimator,
+        fromFrame: CGRect,
+        toFrame: CGRect
+    ) {
+        self.heightConstraint.constant = fromFrame.height
+
+        self.asCard(true)
+
+        self.view.layoutIfNeeded()
+
+        self.heightConstraint.constant = 500
+        sizeAnimator.addAnimations {
+            self.view.layoutIfNeeded()
+        }
+
+        positionAnimator.addAnimations {
+            self.asCard(false)
         }
     }
 }

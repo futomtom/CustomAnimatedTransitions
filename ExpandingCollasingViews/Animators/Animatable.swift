@@ -10,6 +10,8 @@ protocol Animatable {
 
     func resizing(with animator: UIViewPropertyAnimator, fromFrame: CGRect, toFrame: CGRect)
     func positioning(with animator: UIViewPropertyAnimator, fromPoint: CGPoint, toPoint: CGPoint)
+
+    func presentingView(sizeAnimator: UIViewPropertyAnimator, positionAnimator: UIViewPropertyAnimator, fromFrame: CGRect, toFrame: CGRect)
 }
 
 extension Animatable {
@@ -19,4 +21,6 @@ extension Animatable {
 
     func resizing(with animator: UIViewPropertyAnimator, fromFrame: CGRect, toFrame: CGRect) {}
     func positioning(with animator: UIViewPropertyAnimator, fromPoint: CGPoint, toPoint: CGPoint) {}
+
+    func presentingView(sizeAnimator: UIViewPropertyAnimator, positionAnimator: UIViewPropertyAnimator, fromFrame: CGRect, toFrame: CGRect) {}
 }
