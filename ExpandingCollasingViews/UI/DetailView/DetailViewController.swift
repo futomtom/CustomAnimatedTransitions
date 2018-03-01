@@ -9,6 +9,15 @@ class DetailViewController: UIViewController, StoryboardBased {
     @IBOutlet weak var shadowView: UIView!
     @IBOutlet weak var maskView: UIView!
 
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        // Add a shadow
+        self.shadowView.layer.shadowRadius = 16
+        self.shadowView.layer.shadowOffset = CGSize(width: 0, height: 4)
+        self.shadowView.layer.shadowOpacity = 0.25
+    }
+
     override var prefersStatusBarHidden: Bool {
         return true
     }
@@ -19,25 +28,11 @@ class DetailViewController: UIViewController, StoryboardBased {
 
     func asCard(_ value: Bool) {
         if value {
-            // Add a shadow
-            self.shadowView.layer.shadowRadius = 16
-            self.shadowView.layer.shadowOffset = CGSize(width: 0, height: 4)
-            self.shadowView.layer.shadowOpacity = 0.25
-            self.shadowView.layer.masksToBounds = false
-
             // Round the corners
             self.maskView.layer.cornerRadius = 20
-            self.maskView.layer.masksToBounds = true
         } else {
-            // Add a shadow
-            self.shadowView.layer.shadowRadius = 0
-            self.shadowView.layer.shadowOffset = .zero
-            self.shadowView.layer.shadowOpacity = 0
-            self.shadowView.layer.masksToBounds = false
-
             // Round the corners
             self.maskView.layer.cornerRadius = 0
-            self.maskView.layer.masksToBounds = true
         }
     }
 }

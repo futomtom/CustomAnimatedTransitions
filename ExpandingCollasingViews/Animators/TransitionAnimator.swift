@@ -39,6 +39,7 @@ class PopInAndOutAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         // Get the views of where we are animating from
         guard
             let fromVC = transitionContext.viewController(forKey: .from) as? Animatable,
+            let fromView = transitionContext.view(forKey: .from),
             let fromContainer = fromVC.containerView,
             let fromChild = fromVC.childView
         else {
@@ -54,52 +55,67 @@ class PopInAndOutAnimator: NSObject, UIViewControllerAnimatedTransitioning {
             return
         }
 
-        // We will restore these later
-//        let fromSuperview = fromChild.superview
-//        let originalFrame = fromChild.frame
+//        let fromViewSuperview = fromView.superview
 
-        let toViewSuperView = toView.superview
-        let fromChildSuperView = fromChild.superview
-
-        // Add to container the destination view
+//        container.addSubview(fromView)
         container.addSubview(toView)
-        container.addSubview(fromChild)
+
+        let originalFrame = toView.frame
+
 
         // Get the coordinates of the view inside the container
-        let containerCoord = fromContainer.convert(fromChild.frame.origin, to: container)
-//        fromChild.frame.origin = containerCoord
+        let originFrame = CGRect(
+            origin: fromContainer.convert(fromChild.frame.origin, to: container),
+            size: fromChild.frame.size
+        )
+        let destinationFrame = toView.frame
 
+        let yDiff = destinationFrame.origin.y - originFrame.origin.y
+        let xDiff = destinationFrame.origin.x - originFrame.origin.x
 
-        let oldFrame = toView.frame
-        toView.frame = fromChild.frame
-        toView.frame.origin = containerCoord
-
+        toView.frame = originFrame
         toView.layoutIfNeeded()
 
         fromChild.isHidden = true
 
-        // Let the views know we are about to animate
-        toVC.presentingView(fromChild, withDuration: self.transitionDuration)
-        fromVC.dismissingView(fromChild, withDuration: self.transitionDuration)
+        // For the duration of the animation, we are moving the frame. Therefore we have a separate animator
+        // to just control the Y positioning of the views. We will also use this animator to determine when
+        // all of our animations are done.
+        let positionAnimator = UIViewPropertyAnimator(duration: self.transitionDuration, dampingRatio: 0.7)
+        positionAnimator.addAnimations {
+            // Move the view in the Y direction
+            toView.transform = CGAffineTransform(translationX: 0, y: yDiff)
 
-        self.animate({
-            // Resize cell to
-//            fromChild.frame = toChild.frame
-//            fromChild.layoutIfNeeded()
+        }
 
-            toView.frame = oldFrame
+        let sizeAnimator = UIViewPropertyAnimator(duration: self.transitionDuration / 2, curve: .easeInOut)
+        sizeAnimator.addAnimations {
+            toView.frame.size = destinationFrame.size
             toView.layoutIfNeeded()
-        }, completion: { _ in
-            // Restore original info
-//            fromChild.frame = originalFrame
-//            fromSuperview?.addSubview(fromChild)
-            toViewSuperView?.addSubview(toView)
-            fromChildSuperView?.addSubview(fromChild)
+
+            // Move the view in the X direction. We concatinate here because we do not want to overwrite our
+            // previous transformation
+            toView.transform = toView.transform.concatenating(CGAffineTransform(translationX: xDiff, y: 0))
+        }
+
+        // Animations Have Ended
+        positionAnimator.addCompletion { _ in
+            toView.transform = .identity
+            toView.frame = originalFrame
+            toView.layoutIfNeeded()
 
             fromChild.isHidden = false
 
             transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
-        })
+        }
+
+//        fromVC.positioning(with: positionAnimator, fromPoint: originFrame.origin, toPoint: destinationFrame.origin)
+//        fromVC.resizing(with: sizeAnimator, fromFrame: fromView.frame, toFrame: destinationFrame)
+
+        toVC.presentingView(sizeAnimator: sizeAnimator, positionAnimator: positionAnimator, fromFrame: originFrame, toFrame: destinationFrame)
+
+        positionAnimator.startAnimation()
+        sizeAnimator.startAnimation()
     }
 
     internal func dismissTransition(_ transitionContext: UIViewControllerContextTransitioning) {
@@ -148,7 +164,7 @@ class PopInAndOutAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         // For the duration of the animation, we are moving the frame. Therefore we have a separate animator
         // to just control the Y positioning of the views. We will also use this animator to determine when
         // all of our animations are done.
-        let positionAnimator = UIViewPropertyAnimator(duration: self.transitionDuration, dampingRatio: 0.6)
+        let positionAnimator = UIViewPropertyAnimator(duration: self.transitionDuration, dampingRatio: 0.7)
         positionAnimator.addAnimations {
             // Move the view in the Y direction
             fromView.transform = CGAffineTransform(translationX: 0, y: yDiff)
