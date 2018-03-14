@@ -11,9 +11,9 @@ class CollectionViewController: UIViewController {
         self.collectionView.delegate = self
 
         let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: 360, height: 400)
+        layout.itemSize = CGSize(width: 335, height: 410)
         layout.scrollDirection = .vertical
-        layout.minimumLineSpacing = 20
+        layout.minimumLineSpacing = 30
         layout.sectionInset = UIEdgeInsetsMake(16, 16, 16, 16)
         self.collectionView.collectionViewLayout = layout
 

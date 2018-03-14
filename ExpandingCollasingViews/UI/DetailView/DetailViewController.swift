@@ -8,13 +8,14 @@ class DetailViewController: UIViewController, StoryboardBased {
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var shadowView: UIView!
     @IBOutlet weak var maskView: UIView!
+    @IBOutlet weak var closeButton: UIButton!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Add a shadow
-        self.shadowView.layer.shadowRadius = 16
-        self.shadowView.layer.shadowOffset = CGSize(width: 0, height: 4)
+        self.shadowView.layer.shadowRadius = 8
+        self.shadowView.layer.shadowOffset = CGSize(width: 0, height: 8)
         self.shadowView.layer.shadowOpacity = 0.25
     }
 
@@ -29,7 +30,7 @@ class DetailViewController: UIViewController, StoryboardBased {
     func asCard(_ value: Bool) {
         if value {
             // Round the corners
-            self.maskView.layer.cornerRadius = 20
+            self.maskView.layer.cornerRadius = 10
         } else {
             // Round the corners
             self.maskView.layer.cornerRadius = 0
@@ -67,6 +68,7 @@ extension DetailViewController: Animatable {
 
         self.heightConstraint.constant = toFrame.height
         animator.addAnimations {
+            self.closeButton.alpha = 0
             self.view.layoutIfNeeded()
         }
     }
@@ -78,6 +80,7 @@ extension DetailViewController: Animatable {
         toFrame: CGRect
     ) {
         self.heightConstraint.constant = fromFrame.height
+        self.closeButton.alpha = 1
 
         self.asCard(true)
 
