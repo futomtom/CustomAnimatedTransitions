@@ -8,13 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		1514AD3520225B8600604583 /* Animatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1514AD3420225B8600604583 /* Animatable.swift */; };
+		156E29BE2059D33000CF946B /* ShadowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 156E29BD2059D33000CF946B /* ShadowView.swift */; };
 		1580DA061F8E6D53001F95CD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1580DA051F8E6D53001F95CD /* AppDelegate.swift */; };
 		1580DA081F8E6D53001F95CD /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1580DA071F8E6D53001F95CD /* CollectionViewController.swift */; };
 		1580DA0B1F8E6D53001F95CD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1580DA091F8E6D53001F95CD /* Main.storyboard */; };
 		1580DA0D1F8E6D53001F95CD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1580DA0C1F8E6D53001F95CD /* Assets.xcassets */; };
 		1580DA101F8E6D53001F95CD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1580DA0E1F8E6D53001F95CD /* LaunchScreen.storyboard */; };
-		15B61A1B2018CED700CF894F /* Cell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 15B61A1A2018CED700CF894F /* Cell.xib */; };
-		15B61A1D2018CF1000CF894F /* Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B61A1C2018CF1000CF894F /* Cell.swift */; };
+		15B61A1B2018CED700CF894F /* CardCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 15B61A1A2018CED700CF894F /* CardCell.xib */; };
+		15B61A1D2018CF1000CF894F /* CardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B61A1C2018CF1000CF894F /* CardCell.swift */; };
 		15B61A1F2018D3CC00CF894F /* UICollectionView+Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B61A1E2018D3CC00CF894F /* UICollectionView+Reusable.swift */; };
 		15B61A212018D3E700CF894F /* Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B61A202018D3E700CF894F /* Reusable.swift */; };
 		15B61A232018D40200CF894F /* NibLoadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B61A222018D40200CF894F /* NibLoadable.swift */; };
@@ -30,6 +31,7 @@
 
 /* Begin PBXFileReference section */
 		1514AD3420225B8600604583 /* Animatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animatable.swift; sourceTree = "<group>"; };
+		156E29BD2059D33000CF946B /* ShadowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowView.swift; sourceTree = "<group>"; };
 		1580DA021F8E6D53001F95CD /* ExpandingCollasingViews.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExpandingCollasingViews.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1580DA051F8E6D53001F95CD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1580DA071F8E6D53001F95CD /* CollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
@@ -37,8 +39,8 @@
 		1580DA0C1F8E6D53001F95CD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1580DA0F1F8E6D53001F95CD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1580DA111F8E6D53001F95CD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		15B61A1A2018CED700CF894F /* Cell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Cell.xib; sourceTree = "<group>"; };
-		15B61A1C2018CF1000CF894F /* Cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cell.swift; sourceTree = "<group>"; };
+		15B61A1A2018CED700CF894F /* CardCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CardCell.xib; sourceTree = "<group>"; };
+		15B61A1C2018CF1000CF894F /* CardCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardCell.swift; sourceTree = "<group>"; };
 		15B61A1E2018D3CC00CF894F /* UICollectionView+Reusable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Reusable.swift"; sourceTree = "<group>"; };
 		15B61A202018D3E700CF894F /* Reusable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reusable.swift; sourceTree = "<group>"; };
 		15B61A222018D40200CF894F /* NibLoadable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NibLoadable.swift; sourceTree = "<group>"; };
@@ -77,8 +79,8 @@
 			isa = PBXGroup;
 			children = (
 				1580DA071F8E6D53001F95CD /* CollectionViewController.swift */,
-				15B61A1A2018CED700CF894F /* Cell.xib */,
-				15B61A1C2018CF1000CF894F /* Cell.swift */,
+				15B61A1A2018CED700CF894F /* CardCell.xib */,
+				15B61A1C2018CF1000CF894F /* CardCell.swift */,
 			);
 			path = CollectionView;
 			sourceTree = "<group>";
@@ -88,6 +90,7 @@
 			children = (
 				15BC18311F8E7A4200FA6AF4 /* CommonView.swift */,
 				15BC182A1F8E74E600FA6AF4 /* CommonView.xib */,
+				156E29BD2059D33000CF946B /* ShadowView.swift */,
 			);
 			path = CommonView;
 			sourceTree = "<group>";
@@ -214,7 +217,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				15BC182D1F8E784C00FA6AF4 /* DetailViewController.storyboard in Resources */,
-				15B61A1B2018CED700CF894F /* Cell.xib in Resources */,
+				15B61A1B2018CED700CF894F /* CardCell.xib in Resources */,
 				1580DA101F8E6D53001F95CD /* LaunchScreen.storyboard in Resources */,
 				1580DA0D1F8E6D53001F95CD /* Assets.xcassets in Resources */,
 				15BC182B1F8E74E600FA6AF4 /* CommonView.xib in Resources */,
@@ -235,10 +238,11 @@
 				15BC18321F8E7A4200FA6AF4 /* CommonView.swift in Sources */,
 				15BC18341F8E80BE00FA6AF4 /* DetailViewController.swift in Sources */,
 				15B61A212018D3E700CF894F /* Reusable.swift in Sources */,
+				156E29BE2059D33000CF946B /* ShadowView.swift in Sources */,
 				1580DA061F8E6D53001F95CD /* AppDelegate.swift in Sources */,
 				15BC18291F8E749400FA6AF4 /* TransitionAnimator.swift in Sources */,
 				15B61A232018D40200CF894F /* NibLoadable.swift in Sources */,
-				15B61A1D2018CF1000CF894F /* Cell.swift in Sources */,
+				15B61A1D2018CF1000CF894F /* CardCell.swift in Sources */,
 				1514AD3520225B8600604583 /* Animatable.swift in Sources */,
 				15B61A1F2018D3CC00CF894F /* UICollectionView+Reusable.swift in Sources */,
 				15BC18361F8E80E200FA6AF4 /* StoryboardBased.swift in Sources */,

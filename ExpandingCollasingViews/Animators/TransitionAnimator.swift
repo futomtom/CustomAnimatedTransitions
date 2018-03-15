@@ -1,45 +1,43 @@
 import UIKit
 
-// https://www.shinobicontrols.com/blog/ios-10-day-by-day-day-4-uiviewpropertyanimator
+class CustomTransitionAnimationController: NSObject {
+    fileprivate let operation: UINavigationControllerOperation
+    fileprivate let positioningDuration: TimeInterval
+    fileprivate let resizingDuration: TimeInterval
 
-class PopInAndOutAnimator: NSObject, UIViewControllerAnimatedTransitioning {
-
-    enum AnimationType {
-        case spring(dampingRatio: CGFloat, velocity: CGFloat, options: UIViewAnimationOptions)
-        case linear(options: UIViewAnimationOptions)
+    init(
+        operation: UINavigationControllerOperation,
+        positioningDuration: TimeInterval,
+        resizingDuration: TimeInterval
+    ) {
+        self.operation = operation
+        self.positioningDuration = positioningDuration
+        self.resizingDuration = resizingDuration
     }
+}
 
-    fileprivate let operationType: UINavigationControllerOperation
-    fileprivate let transitionDuration: TimeInterval
-    fileprivate let animationType: AnimationType
-
-    init(operation: UINavigationControllerOperation, andDuration duration: TimeInterval, animationType: AnimationType) {
-        self.operationType = operation
-        self.transitionDuration = duration
-        self.animationType = animationType
-    }
-
-    // MARK: UIViewControllerAnimatedTransitioning
+extension CustomTransitionAnimationController: UIViewControllerAnimatedTransitioning {
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-        return self.transitionDuration
+        return max(self.resizingDuration, self.positioningDuration)
     }
 
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
-        if self.operationType == .push {
-            presentTransition(transitionContext)
-        } else if self.operationType == .pop {
-            dismissTransition(transitionContext)
+        if self.operation == .push {
+            self.presentTransition(transitionContext)
+        } else if self.operation == .pop {
+            self.dismissTransition(transitionContext)
         }
     }
+}
 
-    // MARK: Push and Pop animations performers
+/// Perform custom presentation and dismiss animations
+extension CustomTransitionAnimationController {
     internal func presentTransition(_ transitionContext: UIViewControllerContextTransitioning) {
         let container = transitionContext.containerView
 
         // Get the views of where we are animating from
         guard
             let fromVC = transitionContext.viewController(forKey: .from) as? Animatable,
-            let fromView = transitionContext.view(forKey: .from),
             let fromContainer = fromVC.containerView,
             let fromChild = fromVC.childView
         else {
@@ -49,19 +47,14 @@ class PopInAndOutAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         // Get the views of where we are animating to
         guard
             let toVC = transitionContext.viewController(forKey: .to) as? Animatable,
-            let toView = transitionContext.view(forKey: .to),
-            let toChild = toVC.childView
+            let toView = transitionContext.view(forKey: .to)
         else {
             return
         }
 
-//        let fromViewSuperview = fromView.superview
-
-//        container.addSubview(fromView)
-        container.addSubview(toView)
-
         let originalFrame = toView.frame
 
+        container.addSubview(toView)
 
         // Get the coordinates of the view inside the container
         let originFrame = CGRect(
@@ -81,14 +74,13 @@ class PopInAndOutAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         // For the duration of the animation, we are moving the frame. Therefore we have a separate animator
         // to just control the Y positioning of the views. We will also use this animator to determine when
         // all of our animations are done.
-        let positionAnimator = UIViewPropertyAnimator(duration: self.transitionDuration, dampingRatio: 0.7)
+        let positionAnimator = UIViewPropertyAnimator(duration: self.positioningDuration, dampingRatio: 0.7)
         positionAnimator.addAnimations {
             // Move the view in the Y direction
             toView.transform = CGAffineTransform(translationX: 0, y: yDiff)
-
         }
 
-        let sizeAnimator = UIViewPropertyAnimator(duration: self.transitionDuration / 2, curve: .easeInOut)
+        let sizeAnimator = UIViewPropertyAnimator(duration: self.resizingDuration, curve: .easeInOut)
         sizeAnimator.addAnimations {
             toView.frame.size = destinationFrame.size
             toView.layoutIfNeeded()
@@ -109,10 +101,12 @@ class PopInAndOutAnimator: NSObject, UIViewControllerAnimatedTransitioning {
             transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
         }
 
-//        fromVC.positioning(with: positionAnimator, fromPoint: originFrame.origin, toPoint: destinationFrame.origin)
-//        fromVC.resizing(with: sizeAnimator, fromFrame: fromView.frame, toFrame: destinationFrame)
-
-        toVC.presentingView(sizeAnimator: sizeAnimator, positionAnimator: positionAnimator, fromFrame: originFrame, toFrame: destinationFrame)
+        toVC.presentingView(
+            sizeAnimator: sizeAnimator,
+            positionAnimator: positionAnimator,
+            fromFrame: originFrame,
+            toFrame: destinationFrame
+        )
 
         positionAnimator.startAnimation()
         sizeAnimator.startAnimation()
@@ -123,8 +117,7 @@ class PopInAndOutAnimator: NSObject, UIViewControllerAnimatedTransitioning {
 
         guard
             let fromVC = transitionContext.viewController(forKey: .from) as? Animatable,
-            let fromView = transitionContext.view(forKey: .from),
-            let fromChild = fromVC.childView
+            let fromView = transitionContext.view(forKey: .from)
         else {
             return
         }
@@ -164,13 +157,13 @@ class PopInAndOutAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         // For the duration of the animation, we are moving the frame. Therefore we have a separate animator
         // to just control the Y positioning of the views. We will also use this animator to determine when
         // all of our animations are done.
-        let positionAnimator = UIViewPropertyAnimator(duration: self.transitionDuration, dampingRatio: 0.7)
+        let positionAnimator = UIViewPropertyAnimator(duration: self.positioningDuration, dampingRatio: 0.7)
         positionAnimator.addAnimations {
             // Move the view in the Y direction
             fromView.transform = CGAffineTransform(translationX: 0, y: yDiff)
         }
 
-        let sizeAnimator = UIViewPropertyAnimator(duration: self.transitionDuration / 2, curve: .easeInOut)
+        let sizeAnimator = UIViewPropertyAnimator(duration: self.resizingDuration, curve: .easeInOut)
         sizeAnimator.addAnimations {
             fromView.frame.size = destinationFrame.size
             fromView.layoutIfNeeded()
@@ -188,34 +181,15 @@ class PopInAndOutAnimator: NSObject, UIViewControllerAnimatedTransitioning {
             transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
         }
 
-        fromVC.positioning(with: positionAnimator, fromPoint: originFrame.origin, toPoint: destinationFrame.origin)
-        fromVC.resizing(with: sizeAnimator, fromFrame: fromView.frame, toFrame: destinationFrame)
+        fromVC.dismissingView(
+            sizeAnimator: sizeAnimator,
+            positionAnimator: positionAnimator,
+            fromFrame: originFrame,
+            toFrame: destinationFrame
+        )
 
         positionAnimator.startAnimation()
         sizeAnimator.startAnimation()
-    }
-
-    private func animate(_ animations: @escaping (() -> Void), completion: @escaping ((Bool) -> Void)) {
-        switch self.animationType {
-        case .linear(let options):
-            UIView.animate(
-                withDuration: self.transitionDuration,
-                delay: 0,
-                options: options,
-                animations: animations,
-                completion: completion
-            )
-        case .spring(let ratio, let velocity, let options):
-            UIView.animate(
-                withDuration: self.transitionDuration,
-                delay: 0,
-                usingSpringWithDamping: ratio,
-                initialSpringVelocity: velocity,
-                options: options,
-                animations: animations,
-                completion: completion
-            )
-        }
     }
 }
 

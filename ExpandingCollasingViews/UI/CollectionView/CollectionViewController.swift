@@ -17,7 +17,7 @@ class CollectionViewController: UIViewController {
         layout.sectionInset = UIEdgeInsetsMake(16, 16, 16, 16)
         self.collectionView.collectionViewLayout = layout
 
-        self.collectionView.register(cellType: Cell.self)
+        self.collectionView.register(cellType: CardCell.self)
     }
 }
 
@@ -31,7 +31,7 @@ extension CollectionViewController: UICollectionViewDataSource {
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(for: indexPath, cellType: Cell.self)
+        let cell = collectionView.dequeueReusableCell(for: indexPath, cellType: CardCell.self)
         return cell
     }
 }

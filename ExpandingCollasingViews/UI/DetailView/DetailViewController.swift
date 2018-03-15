@@ -1,23 +1,14 @@
 import UIKit
 
 class DetailViewController: UIViewController, StoryboardBased {
+    @IBOutlet weak var maskView: UIView!
+    @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var commonView: CommonView!
     @IBOutlet weak var bodyView: UIView!
     @IBOutlet weak var topConstraint: NSLayoutConstraint!
     @IBOutlet weak var heightConstraint: NSLayoutConstraint!
-    @IBOutlet weak var scrollView: UIScrollView!
-    @IBOutlet weak var shadowView: UIView!
-    @IBOutlet weak var maskView: UIView!
+
     @IBOutlet weak var closeButton: UIButton!
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Add a shadow
-        self.shadowView.layer.shadowRadius = 8
-        self.shadowView.layer.shadowOffset = CGSize(width: 0, height: 8)
-        self.shadowView.layer.shadowOpacity = 0.25
-    }
 
     override var prefersStatusBarHidden: Bool {
         return true
@@ -47,13 +38,12 @@ extension DetailViewController: Animatable {
         return self.commonView
     }
 
-    func positioning(with animator: UIViewPropertyAnimator, fromPoint: CGPoint, toPoint: CGPoint) {        
-        animator.addAnimations {
-            self.asCard(true)
-        }
-    }
-
-    func resizing(with animator: UIViewPropertyAnimator, fromFrame: CGRect, toFrame: CGRect) {
+    func dismissingView(
+        sizeAnimator: UIViewPropertyAnimator,
+        positionAnimator: UIViewPropertyAnimator,
+        fromFrame: CGRect,
+        toFrame: CGRect
+    ) {
         self.topConstraint.isActive = true
 
         // If the top card is completely off screen, we move it to be JUST offscreen.
@@ -67,9 +57,13 @@ extension DetailViewController: Animatable {
         }
 
         self.heightConstraint.constant = toFrame.height
-        animator.addAnimations {
+        sizeAnimator.addAnimations {
             self.closeButton.alpha = 0
             self.view.layoutIfNeeded()
+        }
+
+        positionAnimator.addAnimations {
+            self.asCard(true)
         }
     }
 
