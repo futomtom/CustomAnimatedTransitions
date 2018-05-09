@@ -134,7 +134,7 @@ extension CustomTransitionAnimation {
             sizeAnimator.addCompletion(completionHandler)
         }
 
-        // Kick of the two animations
+        // Kick off the two animations
         positionAnimator.startAnimation()
         sizeAnimator.startAnimation()
     }
@@ -142,6 +142,11 @@ extension CustomTransitionAnimation {
     internal func dismissTransition(_ transitionContext: UIViewControllerContextTransitioning) {
         let container = transitionContext.containerView
 
+        // ===========================================================
+        // Step 1: Get the views we are animating
+        // ===========================================================
+
+        // Views we are animating FROM
         guard
             let fromVC = transitionContext.viewController(forKey: .from) as? Animatable,
             let fromView = transitionContext.view(forKey: .from)
@@ -149,6 +154,7 @@ extension CustomTransitionAnimation {
             return
         }
 
+        // Views we are animating TO
         guard
             let toVC = transitionContext.viewController(forKey: .to) as? Animatable,
             let toView = transitionContext.view(forKey: .to),
@@ -158,18 +164,12 @@ extension CustomTransitionAnimation {
             return
         }
 
-        // container view (2 views)
-        //  * starts at full screen
-        //  * resizes to card size
-        // - Card
-        //  * if off screen, starts exactly at the top of the container
-        //  * use center of card to postion
-        // - snapshot of body text
-
         container.addSubview(toView)
         container.addSubview(fromView)
 
-        toChild.isHidden = true
+        // ===========================================================
+        // Step 2: Determine start and end points for animation
+        // ===========================================================
 
         // Get the coordinates of the view inside the container
         let originFrame = fromView.frame
@@ -177,6 +177,12 @@ extension CustomTransitionAnimation {
             origin: toContainer.convert(toChild.frame.origin, to: container),
             size: toChild.frame.size
         )
+
+        toChild.isHidden = true
+
+        // ===========================================================
+        // Step 3: Perform the animation
+        // ===========================================================
 
         let yDiff = destinationFrame.origin.y - originFrame.origin.y
         let xDiff = destinationFrame.origin.x - originFrame.origin.x
@@ -200,14 +206,7 @@ extension CustomTransitionAnimation {
             fromView.transform = fromView.transform.concatenating(CGAffineTransform(translationX: xDiff, y: 0))
         }
 
-        // Animations Have Ended
-        positionAnimator.addCompletion { _ in
-            fromView.removeFromSuperview()
-            toChild.isHidden = false
-
-            transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
-        }
-
+        // Call the animation delegate
         fromVC.dismissingView(
             sizeAnimator: sizeAnimator,
             positionAnimator: positionAnimator,
@@ -215,6 +214,22 @@ extension CustomTransitionAnimation {
             toFrame: destinationFrame
         )
 
+        // Animation completion.
+        let completionHandler: (UIViewAnimatingPosition) -> Void = { _ in
+            fromView.removeFromSuperview()
+            toChild.isHidden = false
+
+            transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
+        }
+
+        // Put the completion handler on the longest lasting animator
+        if (self.positioningDuration > self.resizingDuration) {
+            positionAnimator.addCompletion(completionHandler)
+        } else {
+            sizeAnimator.addCompletion(completionHandler)
+        }
+
+        // Kick off the two animations
         positionAnimator.startAnimation()
         sizeAnimator.startAnimation()
     }
