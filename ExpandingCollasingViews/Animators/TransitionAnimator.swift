@@ -1,6 +1,6 @@
 import UIKit
 
-class CustomTransitionAnimationController: NSObject {
+class CustomTransitionAnimation: NSObject {
     fileprivate let operation: UINavigationControllerOperation
     fileprivate let positioningDuration: TimeInterval
     fileprivate let resizingDuration: TimeInterval
@@ -16,7 +16,7 @@ class CustomTransitionAnimationController: NSObject {
     }
 }
 
-extension CustomTransitionAnimationController: UIViewControllerAnimatedTransitioning {
+extension CustomTransitionAnimation: UIViewControllerAnimatedTransitioning {
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
         return max(self.resizingDuration, self.positioningDuration)
     }
@@ -31,11 +31,15 @@ extension CustomTransitionAnimationController: UIViewControllerAnimatedTransitio
 }
 
 /// Perform custom presentation and dismiss animations
-extension CustomTransitionAnimationController {
+extension CustomTransitionAnimation {
     internal func presentTransition(_ transitionContext: UIViewControllerContextTransitioning) {
         let container = transitionContext.containerView
 
-        // Get the views of where we are animating from
+        // ===========================================================
+        // Step 1: Get the views we are animating
+        // ===========================================================
+
+        // Views we are animating FROM
         guard
             let fromVC = transitionContext.viewController(forKey: .from) as? Animatable,
             let fromContainer = fromVC.containerView,
@@ -44,7 +48,7 @@ extension CustomTransitionAnimationController {
             return
         }
 
-        // Get the views of where we are animating to
+        // Views we are animating TO
         guard
             let toVC = transitionContext.viewController(forKey: .to) as? Animatable,
             let toView = transitionContext.view(forKey: .to)
@@ -52,9 +56,14 @@ extension CustomTransitionAnimationController {
             return
         }
 
+        // Preserve the original frame of the toView
         let originalFrame = toView.frame
 
         container.addSubview(toView)
+
+        // ===========================================================
+        // Step 2: Determine start and end points for animation
+        // ===========================================================
 
         // Get the coordinates of the view inside the container
         let originFrame = CGRect(
@@ -63,44 +72,42 @@ extension CustomTransitionAnimationController {
         )
         let destinationFrame = toView.frame
 
-        let yDiff = destinationFrame.origin.y - originFrame.origin.y
-        let xDiff = destinationFrame.origin.x - originFrame.origin.x
-
         toView.frame = originFrame
         toView.layoutIfNeeded()
 
         fromChild.isHidden = true
 
+        // ===========================================================
+        // Step 3: Perform the animation
+        // ===========================================================
+
+        let yDiff = destinationFrame.origin.y - originFrame.origin.y
+        let xDiff = destinationFrame.origin.x - originFrame.origin.x
+
         // For the duration of the animation, we are moving the frame. Therefore we have a separate animator
         // to just control the Y positioning of the views. We will also use this animator to determine when
         // all of our animations are done.
+
+        // Animate the card's vertical position
         let positionAnimator = UIViewPropertyAnimator(duration: self.positioningDuration, dampingRatio: 0.7)
         positionAnimator.addAnimations {
             // Move the view in the Y direction
             toView.transform = CGAffineTransform(translationX: 0, y: yDiff)
         }
 
+        // Animate the card's size
         let sizeAnimator = UIViewPropertyAnimator(duration: self.resizingDuration, curve: .easeInOut)
         sizeAnimator.addAnimations {
+            // Animate the size of the Card View
             toView.frame.size = destinationFrame.size
             toView.layoutIfNeeded()
 
-            // Move the view in the X direction. We concatinate here because we do not want to overwrite our
+            // Move the view in the X direction. We concatenate here because we do not want to overwrite our
             // previous transformation
             toView.transform = toView.transform.concatenating(CGAffineTransform(translationX: xDiff, y: 0))
         }
 
-        // Animations Have Ended
-        positionAnimator.addCompletion { _ in
-            toView.transform = .identity
-            toView.frame = originalFrame
-            toView.layoutIfNeeded()
-
-            fromChild.isHidden = false
-
-            transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
-        }
-
+        // Call the animation delegate
         toVC.presentingView(
             sizeAnimator: sizeAnimator,
             positionAnimator: positionAnimator,
@@ -108,6 +115,26 @@ extension CustomTransitionAnimationController {
             toFrame: destinationFrame
         )
 
+        // Animation completion.
+        let completionHandler: (UIViewAnimatingPosition) -> Void = { _ in
+            toView.transform = .identity
+            toView.frame = originalFrame
+
+            toView.layoutIfNeeded()
+
+            fromChild.isHidden = false
+
+            transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
+        }
+
+        // Put the completion handler on the longest lasting animator
+        if (self.positioningDuration > self.resizingDuration) {
+            positionAnimator.addCompletion(completionHandler)
+        } else {
+            sizeAnimator.addCompletion(completionHandler)
+        }
+
+        // Kick of the two animations
         positionAnimator.startAnimation()
         sizeAnimator.startAnimation()
     }
